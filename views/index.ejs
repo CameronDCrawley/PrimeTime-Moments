@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Primetime Moments</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>They Had Their Primetime. You Ready for Yours?</h1>
+  <h2>Primetime Moments</h2>
+  <h3> Purchase Iconic Playoff Moments Artwork</h3>
+
+
+  <ul class= "cardCon moments">
+  <% for(let i=0; i<moments.length; i++) {%>
+    <li class="moments">
+     
+      <div class ="card">
+        <% if (moments[i].image) { %>
+      <img src="<%= moments[i].image %>" alt="<%= moments[i].moment %>">
+      <% } %>
+      <span >Player:<%= moments[i].playerName %></span>
+      <span>Date: <%= moments[i].date %></span>
+      <span class="momentName" >Moment:<%= moments[i].moment %></span>
+       <span>Sport:<%= moments[i].sport %></span>
+      <span>Description:<%=moments[i].descriptionImg %></span>
+
+      <section>
+        <span>Bids</span>
+        <ul>
+          <% moments[i].bid.forEach(function(bid){ %>
+          <li><%= bid %></li>
+          <% }) %>
+          </ul>
+      </section>
+
+          
+        
+  
+<input class="bidInput" type="text">
+<button class="bidBtn" data-moment="<%= moments[i].moment%>">Bid</button>
+  <span>Buy Now:<%=moments[i].buyNow %></span>
+<button class="purchaseBtn"data-moment="<%= moments[i].moment%>">Purchase</button>
+
+        </div>
+
+    </li>
+  <% } %>
+  </ul>
+
+  <div class="cardCon">
+ <section class="cardTwo">
+<form action="/addMoment" method="post">
+    <ul>
+       <li>
+    <label for="addImage">Image:</label>
+    <input type="text" id="addImage" name="image" placeholder="Submit Image for Sale" required>
+    </li>
+        <li>
+    <label for="addName">Player Name:</label>
+    <input type="text" id="addName" name="playerName" placeholder="Name Here" required>
+    </li>
+
+    <li>
+
+    <label for="addDate">Date:</label>
+    <input type="text" id="addDate" name="date" placeholder="date" required>
+    </li>
+
+    <li>
+
+    <label for="addMoment">Moment:</label>
+    <input type="text" id="addMoment" name="moment" placeholder="iconic moment" required>
+    </li>
+<li>
+    <label for="addSport">Sport:</label>
+    <input type="text" id="addSport" name="sport" placeholder="What Sport" required>
+
+    </li>
+
+    <li>
+    <label for="addDescription">Description:</label>
+    <input type="text" id="addDescription" name="descriptionImg" placeholder="What Happened" required>
+    
+    </li>
+
+     <li>
+    <label for="addPrice">Buy Now:</label>
+    <input type="text" id="addPrice" name="buyNow" placeholder="Final Price" required>
+    
+    </li>
+
+    </ul>
+     <button type="submit" class="momentBtn">Submit Moment</button>
+
+</form>
+
+    </section>
+</div>
+  <script src="/main.js"></script>
+
+</body>
+</html>
