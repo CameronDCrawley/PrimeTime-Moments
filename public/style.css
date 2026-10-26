@@ -7,5 +7,6 @@ body{
  background-repeat: no-repeat;
  background-size: cover;
  color: orange;
+ min-height: 100vh;
  
 }
