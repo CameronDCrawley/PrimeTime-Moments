@@ -59,7 +59,7 @@ Navigate into the project folder:
 cd your-repo-name
 
 Install dependencies:
-'npm install'
+`npm install`
 
 Configure Environment Variables:
 Create a .env file in the root directory and add your MongoDB connection string:
