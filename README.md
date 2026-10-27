@@ -56,7 +56,7 @@ git clone https://github.com/your-username/your-repo-name.git
 ```
 
 Navigate into the project folder:
-cd your-repo-name
+`cd your-repo-name`
 
 Install dependencies:
 `npm install`
@@ -67,7 +67,7 @@ MONGODB_URI=your_mongodb_connection_string
 PORT=8080
 
 Run the application:
-npm start
+`npm start`
 
 The server will start on http://localhost:8080 (or your configured port).
 
