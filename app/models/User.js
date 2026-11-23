@@ -26,9 +26,17 @@ let userSchema = mongoose.Schema({
         token        : String,
         email        : String,
         name         : String
-    }
+    },
+    guest            :{type:Boolean,default:false},
+    createdAt      :{type:Date, default:Date.now}
+    
 
 });
+
+userSchema.index(
+    {createdAt:1},
+    {expireAfterSeconds:86400,partialFilterExpression:{guest:true}}
+)
 
 // generating a hash
 userSchema.methods.generateHash = function(password) {

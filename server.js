@@ -7,6 +7,7 @@ const flash = require('connect-flash')
 const passport= require('passport')
 const cors = require('cors')
 const PORT = 8080
+const User = require('./app/models/User')
 const iconicMoment = require('./app/models/iconicMoment')
 require('./config/passport')(passport)
 module.exports = function(app, passport){
@@ -78,6 +79,15 @@ app.use((req,res,next)=>{
             failureFlash : true // allow flash messages
         }));
 
+        app.post('/guest', async (req,res,next)=> {
+            try{
+                const guest = await User.create({guest:true})
+                req.login(guest, err => err ? next(err) :res.redirect('/'))
+            }catch(err){
+                next(err)
+            }
+        })
+
 // =============================================================================
 // UNLINK ACCOUNTS =============================================================
 // =============================================================================
@@ -98,7 +108,7 @@ app.use((req,res,next)=>{
 app.get('/', isLoggedIn, async (request, response)=>{
    let moments = await iconicMoment.find({})
    console.log(moments)
-     response.render('index.ejs',{moments:moments})
+     response.render('index.ejs',{moments:moments, isGuest: request.user.guest})
 
 })
 app.get('/api/iconicMoment', async (request, response)=>{
@@ -112,7 +122,7 @@ let moments = await iconicMoment.find()
 
 
 
-app.post('/addMoment', (req, res) => {
+app.post('/addMoment',isLoggedIn,notGuest, (req, res) => {
   iconicMoment.create(
 {   image:req.body.image,
     playerName: req.body.playerName, 
@@ -134,7 +144,7 @@ app.post('/addMoment', (req, res) => {
 })
 
 
-app.put('/addBid', async(req, res) => {
+app.put('/addBid',isLoggedIn,notGuest, async(req, res) => {
 const {momentName, bid}  = req.body 
 console.log(momentName) 
 console.log(bid)
@@ -149,7 +159,7 @@ console.log(bid)
   })
 
 
-app.delete('/sold', (req, res) => {
+app.delete('/sold',isLoggedIn,notGuest,(req, res) => {
 const {momentName} = req.body
     iconicMoment.findOneAndDelete(
         {moment:momentName},
@@ -174,4 +184,10 @@ function isLoggedIn(req, res, next) {
 
     res.redirect('/login');
 
+}
+
+function notGuest(req,res,next){
+    if(req.user && req.user.guest)
+        return res.status(403).json('Full account needed')
+    next()
 }

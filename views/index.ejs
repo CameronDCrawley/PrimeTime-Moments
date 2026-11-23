@@ -5,7 +5,7 @@
   <title>Primetime Moments</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body data-guest="<%= isGuest ? 'true' : 'false' %>">
   <h1>They Had Their Primetime. You Ready for Yours?</h1>
   <h2>Primetime Moments</h2>
   <h3> Purchase Iconic Playoff Moments Artwork</h3>
@@ -97,6 +97,12 @@
 
     </section>
 </div>
+<dialog id="guestPopup">
+  <h3> Full account needed</h3>
+  <p>Guests can look around, but you need an account to do that</p>
+  <a href="/signup"> Sign Up </a>
+  <button type="button" id="closePopup">Close</button>
+</dialog>
   <script src="/main.js"></script>
 
 </body>

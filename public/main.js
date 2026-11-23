@@ -1,6 +1,24 @@
 let bid = document.querySelectorAll('.bidBtn')
 let sold = document.querySelectorAll('.purchaseBtn')
 
+const isGuest = document.body.dataset.guest === 'true'
+const popup = document.getElementById('guestPopup')
+
+const blocked = '.bidBtn, .purchaseBtn , .momentBtn'
+
+document.getElementById('closePopup').addEventListener('click', ()=> popup.close())
+
+if (isGuest) {
+  document.addEventListener('click',function(e){
+    if (e.target.closest(blocked)){
+      e.preventDefault()
+      e.stopImmediatePropagation()
+      popup.showModal()
+
+    }
+  }, true)
+}
+
 Array.from(bid).forEach(function (element) {
   element.addEventListener("click", function (btn) {
     const card = btn.target.closest('.card')
